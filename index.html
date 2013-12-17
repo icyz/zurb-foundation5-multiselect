@@ -1,0 +1,357 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zurb Foundation 5 Multiselect</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="zmultiselect/zurb5-multiselect.css" />
+    <script src="js/modernizr.js"></script>
+    <style>
+    .prettyprint{
+        border:0!important;
+        font-size: 1.3em;
+    }
+    </style>
+  </head>
+  <body>
+      
+    <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>ZMultiSelect ~ v 0.1</h1>
+        <h3>multiselect plugin for zurb foundation 5 by <a target="_blank" href="http://www.andreamariani.net">andreamariani.net</a></h3>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="large-12 columns">
+          
+        <div data-alert class="alert-box warning">
+            <h4 style="color:#fff;">Pay attention!</h4>
+            <p style='margin:3px'>This plugin is developing. If you decide to use it pay attention, the apis could change.</p>
+            <p style='margin:3px'>This is the first version and could be full of bugs. I have to test it on many devices, if someone want join the work, i'm glad.</p>
+            <p style='margin:3px'>Thanks you all and LONG LIFE TO THE YETI!</p>
+        </div>   
+          
+      	<div class="panel">
+	        
+	        <div class="row">
+	        	<div class="large-4 medium-4 columns">
+                        <h5>Why</h5>
+	    		<p>This is a cool way for have a nice multi-select input with zurb foundation style.<br/>Easy.</p>
+	    	</div>
+	        <div class="large-4 medium-4 columns">
+                        <h5>Dependencies?</h5>
+                        <p>No one. It's standalone.<br/>(only jquery and zurb foundation)</p>
+	        </div>
+	        <div class="large-4 medium-4 columns text-center">
+                        <h5>I'm thirsty. Buy me a beer?</h5>
+                        <br/>   
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+                            ">
+                            <input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                            <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+                        </form>
+	        </div>        
+		</div>
+      	</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        
+        <h4>Demo</h4>
+        <form>
+           
+
+            <div class="row">
+              <div class="large-6 columns">
+                  
+                <input type="text" id="live" placeholder="input text with id='live'" />  
+                  
+                <label for="box1">ZMultiSelect Box #1</label>
+                <select id="box1">
+                  <option value="php">PHP</option>
+                  <option value="php4">PHP4</option>
+                  <option value="php5">PHP5</option>
+                  <option value="php6">PHP6</option>
+                  <option value="js" data-selected >JS</option>
+                  <option value="ruby">ruby</option>
+                  <option value="cplusplus">c++</option>
+                </select>
+                
+                
+                
+              </div>
+              <div class="large-6 columns">
+<pre class="prettyprint">$("select#box1").zmultiselect({
+    live: "#live",
+    placeholder: "My pretty zurb multiselect",
+    filter: true,
+    filterPlaceholder: 'MyFilter...',
+    filterResult: true,
+    filterResultText: "Showed" 
+});
+</pre>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:40px;">
+              <div class="large-6 columns">
+                <label for="box2">ZMultiSelect Box #2</label>
+                <select id="box2">
+                  <option value="husker">Husker</option>
+                  <option value="starbuck">Starbuck</option>
+                  <option value="hotdog">Hot Dog</option>
+                  <option value="apollo">Apollo</option>
+                </select>
+
+              </div>
+              <div class="large-6 columns">
+<pre class="prettyprint">$("select#box2").zmultiselect({  
+    live: false,
+    placeholder: "Box number 2",
+    filter: false
+});
+</pre>
+              </div>
+            </div>
+
+            
+            <div class="row" style="margin-top:40px;">
+              <div class="large-6 columns">
+                  <h5>Testing #box1 methods</h5>
+                  <div>
+                    <a class="button tiny " onclick="jQuery('#box1').zmultiselect('open');">open</a>
+                    <a class="button tiny " onclick="jQuery('#box1').zmultiselect('close');">close</a>
+                  </div>
+                  <div>
+                    <a class="button tiny success" onclick="jQuery('#box1').zmultiselect('set','ruby',true);">check ruby</a>
+                    <a class="button tiny success" onclick="jQuery('#box1').zmultiselect('set','ruby',false);">uncheck ruby</a>
+                  </div>
+                  <div>
+                    <a class="button tiny alert" onclick="jQuery('#box1').zmultiselect('checkall');">checkall</a>
+                    <a class="button tiny alert" onclick="jQuery('#box1').zmultiselect('uncheckall');">uncheckall</a>
+                  </div>
+              </div>
+              <div class="large-6 columns">
+                  <h5>Testing #box2</h5>
+                  <div>
+                    <a class="button tiny " onclick="jQuery('#box2').zmultiselect('open');">open</a>
+                    <a class="button tiny " onclick="jQuery('#box2').zmultiselect('close');">close</a>
+                  </div>
+                  <div>
+                    <a class="button tiny success" onclick="jQuery('#box2').zmultiselect('set','hotdog',true);">check hotdog</a>
+                    <a class="button tiny success" onclick="jQuery('#box2').zmultiselect('set','hotdog',false);">uncheck hotdog</a>
+                  </div>
+                  <div>
+                    <a class="button tiny alert" onclick="jQuery('#box2').zmultiselect('checkall');">checkall</a>
+                    <a class="button tiny alert" onclick="jQuery('#box2').zmultiselect('uncheckall');">uncheckall</a>
+                  </div>
+              </div>
+            </div>
+
+          </form>
+      </div>     
+
+    </div>
+    
+      <div class="row" style="margin-top:40px;">
+        <div class="large-12 columns">
+            
+            <h4>Options</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="250">Option</th>
+                        <th >Description</th>
+                        <th width="100">Default</th>
+                        <th width="250">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>placeholder</td>
+                        <td>Set placeholder text when checkbox aren't checked</td>
+                        <td>"&amp;nbsp;"</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('open');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>selectedText (in development)</td>
+                        <td>The text showed when checkbox are checked.<br/>e.g: "3 of 6 selected"</td>
+                        <td>"# of # selected"</td>
+                        <td><pre class='prettyprint'></pre></td>
+                    </tr>
+                    <tr>
+                        <td>filter</td>
+                        <td>This feature add an input for filter the checkbox</td>
+                        <td>false</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect({filter: true});</pre></td>
+                    </tr>
+                    <tr>
+                        <td>filterResult</td>
+                        <td>Show summary checkbox visible / total</td>
+                        <td>true</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('open');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>filterResultText</td>
+                        <td>Change the text of summary</td>
+                        <td>"showed"</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('open');</pre></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="large-12 columns">
+            
+            <h4>Methods</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="250">Method</th>
+                        <th >Description</th>
+                        <th width="250">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>open</td>
+                        <td>Open multiselect</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('open');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>close</td>
+                        <td>Close multiselect</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('open');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>set</td>
+                        <td>Check or uncheck checkbox using value selector</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('set','hotdot',true);</pre></td>
+                    </tr>
+                    <tr>
+                        <td>checkall</td>
+                        <td>Check all checkbox</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('checkall');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>uncheckall</td>
+                        <td>Uncheck all checkbox</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('uncheckall');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>destroy</td>
+                        <td>Remove option</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('destroy', 'hotdog');</pre></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      
+      
+      <div class="row">
+        <div class="large-12 columns">
+            
+            <h4>Events (in development)</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="250">Event</th>
+                        <th>Description</th>
+                        <th width="250">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>onOpen</td>
+                        <td>On open callback</td>
+                        <td><pre class='prettyprint'></pre></td>
+                       
+                    </tr>
+                    <tr>
+                        <td>onClose</td>
+                        <td>On close callback</td>
+                        <td><pre class='prettyprint'></pre></td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    
+      
+      
+      
+    <div class="row">
+        <div class="large-12 columns">
+            <h4>Share the joy</h4>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-via="andreamariani2k" data-size="large" data-related="foundationzurb" data-hashtags="foundationzurb">Tweet</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            <a href="https://twitter.com/andreamariani2k" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @andreamariani2k</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>  
+    </div>
+      
+    
+      
+    <div class="row">
+      <div class="large-12 columns">
+          <hr/>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'zurbmultiselect'; // required: replace example with your forum shortname
+
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+      
+    <!-- code prettify -->
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>  
+      
+    <script src="js/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script src="zmultiselect/zurb5-multiselect.js"></script>
+    
+    <script>
+        $("select#box1").zmultiselect({
+            live: "#live",
+            placeholder: "My pretty zurb multiselect",
+            filter: true,
+            filterPlaceholder: 'MyFilter...',
+            filterResult: true,
+            filterResultText: "Showed"        
+        });
+        
+        
+        $("select#box2").zmultiselect({
+            live: false,
+            placeholder: "Box number 2",
+            filter: false
+            
+        });
+        
+    </script>
+  </body>
+</html>
