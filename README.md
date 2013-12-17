@@ -8,5 +8,5 @@ demo: http://andreamariani.net/lab/zurbfoundation5-multiselect/
 
 Bugs and Known Issues:
 v 0.1
-- filter dont work on mobile android browser 
-- second click on select dont close the dropbox
+- filter doesn't work on mobile android browser 
+- the second click on multiselect does not close the dropdown
