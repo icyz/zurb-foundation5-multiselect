@@ -41,6 +41,7 @@
 .zselect ul li{
         padding:4px 0.70rem 0px 0.70rem ;
         margin:0;
+        font-size:0.9rem;
         
 }
 .zselect ul li.disabled{
@@ -50,12 +51,16 @@
         background-color:#2672EC;
         color: #fff;
 }
-.zselect ul li.filter,
-.zselect ul li.filter:hover,
+.zselect ul li.zmsfilter,
+.zselect ul li.zmsfilter:hover,
 .zselect ul li.filterResult,
 .zselect ul li.filterResult:hover{
         background-color:transparent;
         color: #000;
+       
+}
+.zselect ul li.zmsfilter input{
+        margin-bottom:0.3rem;
 }
     
 .zselect ul li.filterResult{

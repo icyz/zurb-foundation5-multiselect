@@ -31,7 +31,7 @@
            var click = $(e.target).prop("tagName");
            //console.log(click);
            if(click!=='LI' && click!=='INPUT'){
-                    $("li.filter input").val('').keyup(); //clean filter
+                    $("li.zmsfilter input").val('').keyup(); //clean filter
                     $("ul",this).toggle();
            }
             
@@ -42,7 +42,7 @@
         $(window).on('keydown', function(e){
             e = e || window.event;
             if (e.keyCode === 27) {
-                $("li.filter input").val('').keyup(); //clean filter
+                $("li.zmsfilter input").val('').keyup(); //clean filter
                 $(".zselect ul").hide();
             }
         });
@@ -68,7 +68,17 @@
         });
         
         
+        function refreshPlaceholder(rel, placeholder){   
+            var checked=$("div#"+rel+" ul li input:checked").length;
+            var tot=$("div#"+rel+" ul li input:checkbox").length;
 
+            if(checked>0) {
+                $(".zselect#"+rel+" span.head").text("Selezionati "+checked+" di "+tot);
+            }
+            else {
+                $(".zselect#"+rel+" span.head").html( (placeholder===undefined) ? '&nbsp;' : placeholder );
+            }
+        }
 
 
 
@@ -82,6 +92,9 @@ var methods = {
             id=Math.random().toString(36).substr(2, 9);
             $(v).hide().attr('rel',id);  
             $(v).parent().append("<div id='"+id+"' class='zselect'><span class='head'></span><ul></ul></div>");
+            
+            $('#'+id+' ul').append("<li onclick=\"jQuery(this).parent().find('input:checkbox').prop('checked', true).change();\">Seleziona tutto</li>");
+            $('#'+id+' ul').append("<li onclick=\"jQuery(this).parent().find('input:checkbox').prop('checked', false).change();\">Deseleziona tutto</li>");
             
             $.each(v, function(j,z){
                 //console.log( $(z).attr('value') + " " + $(z).text() );
@@ -108,19 +121,20 @@ var methods = {
             
             
             var rel = this.attr('rel');
-            $("div#"+rel+" ul").prepend('<li class="filter"><input type="text" placeholder="'+fplaholder+'" /></li>');
+            $("div#"+rel+" ul").prepend('<li class="zmsfilter"><input type="text" placeholder="'+fplaholder+'" /></li>');
 
             
 
             if(options.filterResult === true)
                 $("div#"+rel+" ul").append('<li class="filterResult"></li>');
             
-            $("div#"+rel+" ul li.filter input").keyup(function(){
-                    var value=$(this).val();
+            $("div#"+rel+" ul li.zmsfilter input").keyup(function(){
+                    var value=$(this).val().toLowerCase();
                     var show=0,tot=$("div#"+rel+" ul li input:checkbox").length;
                     $("div#"+rel+" ul li input:checkbox").filter( function(i,v) {
                           //console.log($(v).val());
-                          if( $(v).val().indexOf(value) === -1 ){//and text() check...
+                          //console.log($(v).parent().text());
+                          if( $(v).val().toLowerCase().indexOf(value) === -1 && $(v).parent().text().toLowerCase().indexOf(value) === -1 ){//and text() check...
                                $(v).parent().hide();
  
                           }
@@ -146,8 +160,32 @@ var methods = {
         }//end live
         
         
+        if(options.get !== undefined){ 
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            var need = false;
+            for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == options.get) {
+                  need = pair[1].split('%2C');
+                }
+            } 
+            
+            if(need){
+                var rel = this.attr('rel');
+                for(var i=0; i<need.length; i++){
+                    //console.log(need[i]);
+                    $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").trigger('click');
+                   
+                }
+                refreshPlaceholder(rel,options.placeholder);
+            }
+        }
         
-        
+        //placeholder dopo click
+        $(".zselect#"+rel).on('change','input:checkbox',function(){
+            refreshPlaceholder(rel,options.placeholder);
+        });
        
         onResize();
         
@@ -179,6 +217,12 @@ var methods = {
     
     set : function (val,checked){
         $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").prop('checked', checked).change();
+    },
+    uncheckall_inpage : function( ) {
+        $(".zselect ul li input:checkbox").prop('checked', false).change();
+    },
+    checkall_inpage : function( ) {
+        $(".zselect ul li input:checkbox").prop('checked', true).change();
     },
     checkall : function( ) {
         $("div#"+$(this).attr('rel')+" ul li input:checkbox").prop('checked', true).change();

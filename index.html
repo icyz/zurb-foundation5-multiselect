@@ -69,7 +69,6 @@
         <h4>Demo</h4>
         <form>
            
-
             <div class="row">
               <div class="large-6 columns">
                   
@@ -163,6 +162,21 @@
 
     </div>
     
+    <div class="row" style="margin-top:40px;">
+        <div class="large-12 columns">  
+            <h4>Tips</h4>
+            <div>You can pre-select an option using data-selected into your &lt;select>. e.g:</div>
+<pre class='prettyprint'>
+&lt;select>
+    &lt;option>HotDog&lt;/option>
+    &lt;option data-selected>Pizza&lt;/option>
+    &lt;option>Spaghetti&lt;/option>
+&lt;/select>
+            </pre>
+            <div>Look at "JS" in #box1.</div>
+        </div>
+    </div>
+    
       <div class="row" style="margin-top:40px;">
         <div class="large-12 columns">
             
@@ -188,6 +202,15 @@
                         <td>The text showed when checkbox are checked.<br/>e.g: "3 of 6 selected"</td>
                         <td>"# of # selected"</td>
                         <td><pre class='prettyprint'></pre></td>
+                    </tr>
+                    <tr>
+                        <td>get</td>
+                        <td>Initializing multiselect using data from url</td>
+                        <td>false</td>
+                        <td>url example: http://www.andreamariani.net/zurbfoundation5-multiselect/index.html?box1=1,2,3<br/>
+                            <pre class='prettyprint'>$("#multiselect").zmultiselect({get: 'box1'});</pre>
+                            This will check input with value "1", "2", "3" (for the multiselect with id="multiselect")
+                        </td>
                     </tr>
                     <tr>
                         <td>filter</td>
@@ -250,6 +273,16 @@
                         <td>uncheckall</td>
                         <td>Uncheck all checkbox</td>
                         <td><pre class='prettyprint'>$("#multiselect").zmultiselect('uncheckall');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>checkall_inpage</td>
+                        <td>Check all the checkbox in the page</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('checkall_inpage');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>uncheckall_inpage</td>
+                        <td>Uncheck all the checkbox in the page</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('uncheckall_inpage');</pre></td>
                     </tr>
                     <tr>
                         <td>destroy</td>
