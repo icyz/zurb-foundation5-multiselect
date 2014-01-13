@@ -51,7 +51,7 @@
         //click on label toggle input
         $(document).on('click', 'li', function(e){
             if($(e.target).prop("tagName") !== "INPUT")
-                $("input:checkbox",this).click();
+                $("input:checkbox",this).prop('checked', function( i, val ) { return !val; });
         });
         
         
@@ -76,7 +76,7 @@
 var methods = {
     init : function(options) {
         //console.log( $(this) );
-        var id,checked;
+        var id,checked,disabled="",disabledClass="";
         $.each( $(this),function(k,v){
         
             id=Math.random().toString(36).substr(2, 9);
@@ -89,7 +89,12 @@ var methods = {
                 //console.log( '#'+id+' ul' );
                
                 checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
-                $('#'+id+' ul').append("<li><input value='"+$(z).val()+"' type='checkbox' "+checked+" />&nbsp;"+$(z).text()+"</li>");
+                
+                if( $(z).is('[data-disabled]') ){
+                    disabled = "disabled='disabled'";
+                    disabledClass = "class='disabled'";
+                }
+                $('#'+id+' ul').append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+$(z).text()+"</li>");
                 $('#'+id+' span').html( (options.placeholder===undefined) ? '&nbsp;' : options.placeholder );
             });
             

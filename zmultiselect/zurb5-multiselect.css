@@ -43,6 +43,9 @@
         margin:0;
         
 }
+.zselect ul li.disabled{
+        color:#808080;
+}
 .zselect ul li:hover{
         background-color:#2672EC;
         color: #fff;
