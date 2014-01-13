@@ -203,6 +203,15 @@
                         <td><pre class='prettyprint'></pre></td>
                     </tr>
                     <tr>
+                        <td>get</td>
+                        <td>Initializing multiselect using data from url</td>
+                        <td>false</td>
+                        <td>url example: http://www.andreamariani.net/zurbfoundation5-multiselect/index.html?box1=1,2,3<br/>
+                            <pre class='prettyprint'>$("#multiselect").zmultiselect({get: 'box1'});</pre>
+                            This will check input with value "1", "2", "3" (for the multiselect with id="multiselect")
+                        </td>
+                    </tr>
+                    <tr>
                         <td>filter</td>
                         <td>This feature add an input for filter the checkbox</td>
                         <td>false</td>
@@ -263,6 +272,16 @@
                         <td>uncheckall</td>
                         <td>Uncheck all checkbox</td>
                         <td><pre class='prettyprint'>$("#multiselect").zmultiselect('uncheckall');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>checkall_inpage</td>
+                        <td>Check all the checkbox in the page</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('checkall_inpage');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>uncheckall_inpage</td>
+                        <td>Uncheck all the checkbox in the page</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('uncheckall_inpage');</pre></td>
                     </tr>
                     <tr>
                         <td>destroy</td>
