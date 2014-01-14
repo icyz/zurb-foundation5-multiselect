@@ -51,7 +51,7 @@
         //click on label toggle input
         $(document).on('click', 'li', function(e){
             if($(e.target).prop("tagName") !== "INPUT")
-                $("input:checkbox",this).prop('checked', function( i, val ) { return !val; });
+                $("input:checkbox",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
         });
         
         
