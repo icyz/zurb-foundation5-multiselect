@@ -56,13 +56,17 @@
         
         
         //when resize window + init
-        function onResize(){
+        function onResize(reflow){
             $.each( $(".zselect"), function(k,v){
-                var w = $(v).outerWidth();
+                if( $(v).find("ul").attr('style') !== undefined && reflow !== true ) return false; //break if already set
+                
+                var w = $(v).outerWidth(); 
+                
                 $(v).find("ul").attr('style', 'width:'+w+'px!important;' );
                 
             });
         }
+        
         $( window ).resize(function() {
             onResize();
         });
@@ -187,7 +191,7 @@ var methods = {
             refreshPlaceholder(rel,options.placeholder);
         });
        
-        onResize();
+        //onResize();
         
 
     },
@@ -232,8 +236,10 @@ var methods = {
     },
     destroy : function (val){
         $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").parent().remove();
-    }
-            
+    },
+    reflow : function(){
+        onResize(true);
+    }        
             
     //,update : function( content ) {  }
     };
