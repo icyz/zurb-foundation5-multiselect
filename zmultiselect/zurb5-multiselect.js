@@ -5,9 +5,13 @@
  * @mail me@andreamariani.net
  * @twitter @andreamariani2k
  * @web http://www.andreamariani.net
+ * 
+ * ** THIS PLUGIN IS IN DEVELOPMENT ** *
  */
 
 (function($) {
+    
+        
     
         //conflitto da risolvere:
         //le prime due funzioni si danno noia
@@ -107,7 +111,7 @@
 
 var methods = {
     init : function(options) {
-        //console.log( $(this) );
+        
         var id,checked,disabled="",disabledClass="";
         $.each( $(this),function(k,v){
         
@@ -115,9 +119,17 @@ var methods = {
             $(v).hide().attr('rel',id);  
             $(v).parent().append("<div id='"+id+"' class='zselect'><span class='zmshead'></span><ul></ul></div>");
             
-            //TODO "select all" seleziona anche i disabilitati
-            $('#'+id+' ul').append("<li class='selectall'>Seleziona tutto</li>");
-            $('#'+id+' ul').append("<li class='deselectall'>Deseleziona tutto</li>");
+            if(options.selectAll!==false){
+                var sAllText="Select All";
+                var desAllText="Deselect All";
+                if(options.selectAllText!==undefined){
+                    sAllText=options.selectAllText[0];
+                    desAllText=options.selectAllText[1];
+                }
+                
+                $('#'+id+' ul').append("<li class='selectall'>"+sAllText+"</li>");
+                $('#'+id+' ul').append("<li class='deselectall'>"+desAllText+"</li>");
+            }
             
             $.each(v, function(j,z){
                 //console.log( $(z).attr('value') + " " + $(z).text() );
@@ -290,7 +302,6 @@ $.fn.zmultiselect = function(methodOrOptions) {
     if ( methods[methodOrOptions] ) {
         return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
-        // Default to "init"
         return methods.init.apply( this, arguments );
     } else {
         $.error( 'Method ' +  methodOrOptions + ' does not exist on zmultiselect' );
