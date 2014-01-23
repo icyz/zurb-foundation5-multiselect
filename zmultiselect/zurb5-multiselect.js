@@ -1,9 +1,10 @@
 /**
  * ZURB FOUNDATION 5 MULTISELECT PLUGIN 
  * 
- * @author andreamariani.net
+ * @author Andrea Mariani
  * @mail me@andreamariani.net
  * @twitter @andreamariani2k
+ * @web http://www.andreamariani.net
  */
 
 (function($) {
@@ -32,7 +33,7 @@
            //console.log(click);
            if(click!=='LI' && click!=='INPUT'){
                     $("li.zmsfilter input").val('').keyup(); //clean filter
-                    $("ul",this).toggle();
+                    $("ul",this).toggle(); 
            }
             
         });
@@ -49,9 +50,17 @@
         
         
         //click on label toggle input
-        $(document).on('click', 'li', function(e){
-            if($(e.target).prop("tagName") !== "INPUT")
-                $("input:checkbox",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
+        $(document).on('click', 'li', function(e){ 
+            if($(e.target).prop("tagName") !== "INPUT"){
+                    $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
+            }
+            
+        });
+        
+        //select all and deselect all
+        $(document).on('click','.selectall,.deselectall', function(){
+           var state = ($(this).hasClass('selectall'))?true:false;
+           $(this).parent().find("input:checkbox[disabled!='disabled']").prop('checked', state).change();
         });
         
         
@@ -64,7 +73,16 @@
                 
                 $(v).find("ul").attr('style', 'width:'+w+'px!important;' );
                 
+                
+                //var size = Math.max(Math.min(w / (1), parseFloat(20)), parseFloat(11));
+                //console.log(size);
+                //$(v).find('ul li').css('font-size', size);
+                
+                var w_li = $(v).find('ul li:eq(0)').width();
+                //console.log(w_li);
+                
             });
+            
         }
         
         $( window ).resize(function() {
@@ -77,10 +95,10 @@
             var tot=$("div#"+rel+" ul li input:checkbox").length;
 
             if(checked>0) {
-                $(".zselect#"+rel+" span.head").text("Selezionati "+checked+" di "+tot);
+                $(".zselect#"+rel+" span.zmshead").text("Selezionati "+checked+" di "+tot);
             }
             else {
-                $(".zselect#"+rel+" span.head").html( (placeholder===undefined) ? '&nbsp;' : placeholder );
+                $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder );
             }
         }
 
@@ -95,26 +113,31 @@ var methods = {
         
             id=Math.random().toString(36).substr(2, 9);
             $(v).hide().attr('rel',id);  
-            $(v).parent().append("<div id='"+id+"' class='zselect'><span class='head'></span><ul></ul></div>");
+            $(v).parent().append("<div id='"+id+"' class='zselect'><span class='zmshead'></span><ul></ul></div>");
             
-            $('#'+id+' ul').append("<li onclick=\"jQuery(this).parent().find('input:checkbox').prop('checked', true).change();\">Seleziona tutto</li>");
-            $('#'+id+' ul').append("<li onclick=\"jQuery(this).parent().find('input:checkbox').prop('checked', false).change();\">Deseleziona tutto</li>");
+            //TODO "select all" seleziona anche i disabilitati
+            $('#'+id+' ul').append("<li class='selectall'>Seleziona tutto</li>");
+            $('#'+id+' ul').append("<li class='deselectall'>Deseleziona tutto</li>");
             
             $.each(v, function(j,z){
                 //console.log( $(z).attr('value') + " " + $(z).text() );
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-               
                 checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
                 
                 if( $(z).is('[data-disabled]') ){
                     disabled = "disabled='disabled'";
                     disabledClass = "class='disabled'";
                 }
+                else{
+                    disabled = disabledClass = "";
+                }
+                
+                
                 $('#'+id+' ul').append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+$(z).text()+"</li>");
-                $('#'+id+' span').html( (options.placeholder===undefined) ? '&nbsp;' : options.placeholder );
+                
             });
-            
+            $('#'+id+' span.zmshead').html( (options.placeholder===undefined) ? '&nbsp;' : options.placeholder );
         });
         
         if(options.filter === true){
@@ -171,7 +194,9 @@ var methods = {
             for (var i=0;i<vars.length;i++) {
                 var pair = vars[i].split("=");
                 if (pair[0] == options.get) {
-                  need = pair[1].split('%2C');
+                    
+                  need = pair[1].replace(',','%2C').split('%2C');
+                  
                 }
             } 
             
@@ -218,7 +243,16 @@ var methods = {
     },
     
             
-    
+    disable : function (val,state){ //console.log(state);
+        if(val!==undefined){
+            if(state) $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").attr('disabled','disabled');
+            else      $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").removeAttr('disabled');
+        }
+        else{
+            if(state) $("div#"+$(this).attr('rel')+" ul li input:checkbox").attr('disabled','disabled');
+            else      $("div#"+$(this).attr('rel')+" ul li input:checkbox").removeAttr('disabled');
+        }
+    },
     set : function (val,checked){
         $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").prop('checked', checked).change();
     },
