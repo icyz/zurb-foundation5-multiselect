@@ -21,7 +21,7 @@
     
     <div class="row">
       <div class="large-12 columns">
-        <h1>ZMultiSelect ~ v 0.1</h1>
+        <h1>ZMultiSelect ~ v 0.2</h1>
         <h3>multiselect plugin for zurb foundation 5 by <a target="_blank" href="http://www.andreamariani.net">andreamariani.net</a></h3>
       </div>
     </div>
@@ -265,6 +265,12 @@
                         <td><pre class='prettyprint'>$("#multiselect").zmultiselect('set','hotdot',true);</pre></td>
                     </tr>
                     <tr>
+                        <td>disable</td>
+                        <td>Enable or disabled checkbox</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('disable','hotdot',true);
+$("#multiselect").zmultiselect('disable','hotdot',false);</pre></td>
+                    </tr>
+                    <tr>
                         <td>checkall</td>
                         <td>Check all checkbox</td>
                         <td><pre class='prettyprint'>$("#multiselect").zmultiselect('checkall');</pre></td>
@@ -283,6 +289,11 @@
                         <td>uncheckall_inpage</td>
                         <td>Uncheck all the checkbox in the page</td>
                         <td><pre class='prettyprint'>$("#multiselect").zmultiselect('uncheckall_inpage');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>reflow</td>
+                        <td>Force reinit (useful when you change width dynamically)</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('reflow');</pre></td>
                     </tr>
                     <tr>
                         <td>destroy</td>
