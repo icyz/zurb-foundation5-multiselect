@@ -135,7 +135,7 @@ var methods = {
                 //console.log( $(z).attr('value') + " " + $(z).text() );
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-                checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                checked = ( $(z).is('[data-selected]') || $(z).attr('selected')=='selected' ) ? "checked='checked'" : "";
                 
                 if( $(z).is('[data-disabled]') ){
                     disabled = "disabled='disabled'";
