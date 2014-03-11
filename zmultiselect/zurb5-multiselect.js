@@ -1,18 +1,18 @@
 /**
- * ZURB FOUNDATION 5 MULTISELECT PLUGIN
- *
+ * ZURB FOUNDATION 5 MULTISELECT PLUGIN 
+ * 
  * @author Andrea Mariani
  * @mail me@andreamariani.net
  * @twitter @andreamariani2k
  * @web http://www.andreamariani.net
- *
+ * 
  * ** THIS PLUGIN IS IN DEVELOPMENT ** *
  */
 
 (function($) {
-
-
-
+    
+        
+    
         //conflitto da risolvere:
         //le prime due funzioni si danno noia
 
@@ -27,22 +27,22 @@
                 //console.log(e.target);
                 //console.log('else');
             }
-
+            
         });
-
-
+        
+        
         //open dropdown onclick
         $(document).on('click', '.zselect', function(e){
            var click = $(e.target).prop("tagName");
            //console.log(click);
            if(click!=='LI' && click!=='INPUT'){
                     $("li.zmsfilter input").val('').keyup(); //clean filter
-                    $("ul",this).toggle();
+                    $("ul",this).toggle(); 
            }
-
+            
         });
-
-
+        
+        
         //escape key for close all zselect
         $(window).on('keydown', function(e){
             e = e || window.event;
@@ -51,44 +51,44 @@
                 $(".zselect ul").hide();
             }
         });
-
-
+        
+        
         //click on label toggle input
-        $(document).on('click', 'li', function(e){
+        $(document).on('click', 'li', function(e){ 
             if($(e.target).prop("tagName") !== "INPUT"){
                     $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
             }
-
+            
         });
-
+        
         //select all and deselect all
         $(document).on('click','.selectall,.deselectall', function(){
            var state = ($(this).hasClass('selectall'))?true:false;
            $(this).parent().find("input:checkbox[disabled!='disabled']").prop('checked', state).change();
         });
-
-
+        
+        
         //when resize window + init
-        function onResize(reflow){
+        function onResize(reflow){ 
             $.each( $(".zselect"), function(k,v){
                 if( $(v).find("ul").attr('style') !== undefined && reflow !== true ) return false; //break if already set
-
-                var w = $(v).outerWidth();
-
+                
+                var w = $(v).outerWidth(); 
+                
                 $(v).find("ul").attr('style', 'width:'+w+'px!important;' );
-
-
+                
+                
                 //var size = Math.max(Math.min(w / (1), parseFloat(20)), parseFloat(11));
                 //console.log(size);
                 //$(v).find('ul li').css('font-size', size);
-
+                
                 var w_li = $(v).find('ul li:eq(0)').width();
                 //console.log(w_li);
-
+                
             });
-
+            
         }
-
+        
         $( window ).resize(function() {
             onResize();
         });
@@ -100,7 +100,7 @@
             var tot=$("div#"+rel+" ul li input:checkbox").length;
 
             if(checked>0) {
-                $(".zselect#"+rel+" span.zmshead").text(counter[0]+checked+counter[1]+tot);
+                $(".zselect#"+rel+" span.zmshead").text(counter[0]+" "+checked+" "+counter[1]+" "+tot);
             }
             else {
                 $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder );
@@ -112,14 +112,14 @@
 
 var methods = {
     init : function(options) {
-
+        
         var id,checked,disabled="",disabledClass="";
         $.each( $(this),function(k,v){
-
+        
             id=Math.random().toString(36).substr(2, 9);
-            $(v).hide().attr('rel',id);
+            $(v).hide().attr('rel',id);  
             $(v).parent().append("<div id='"+id+"' class='zselect'><span class='zmshead'></span><ul></ul></div>");
-
+            
             if(options.selectAll!==false){
                 var sAllText="Select All";
                 var desAllText="Deselect All";
@@ -127,17 +127,17 @@ var methods = {
                     sAllText=options.selectAllText[0];
                     desAllText=options.selectAllText[1];
                 }
-
+                
                 $('#'+id+' ul').append("<li class='selectall'>"+sAllText+"</li>");
                 $('#'+id+' ul').append("<li class='deselectall'>"+desAllText+"</li>");
             }
-
+            
             $.each(v, function(j,z){
                 //console.log( $(z).attr('value') + " " + $(z).text() );
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-                checked = ( $(z).is('[data-selected]') || $(z).attr('selected')=='selected' ) ? "checked='checked'" : "";
-
+                checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                
                 if( $(z).is('[data-disabled]') ){
                     disabled = "disabled='disabled'";
                     disabledClass = "class='disabled'";
@@ -145,29 +145,29 @@ var methods = {
                 else{
                     disabled = disabledClass = "";
                 }
-
-
+                
+                
                 $('#'+id+' ul').append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+$(z).text()+"</li>");
-
+                
             });
             $('#'+id+' span.zmshead').html( (options.placeholder===undefined) ? '&nbsp;' : options.placeholder );
         });
-
+        
         if(options.filter === true){
             //defaults
             if (options.filterResult === undefined) options.filterResult = true;
             if (options.filterResultText === undefined) options.filterResultText = 'showed';
             var fplaholder = (options.filterPlaceholder !== undefined) ? options.filterPlaceholder : "Filter...";
-
-
+            
+            
             var rel = this.attr('rel');
             $("div#"+rel+" ul").prepend('<li class="zmsfilter"><input type="text" placeholder="'+fplaholder+'" /></li>');
 
-
+            
 
             if(options.filterResult === true)
                 $("div#"+rel+" ul").append('<li class="filterResult"></li>');
-
+            
             $("div#"+rel+" ul li.zmsfilter input").keyup(function(){
                     var value=$(this).val().toLowerCase();
                     var show=0,tot=$("div#"+rel+" ul li input:checkbox").length;
@@ -176,49 +176,49 @@ var methods = {
                           //console.log($(v).parent().text());
                           if( $(v).val().toLowerCase().indexOf(value) === -1 && $(v).parent().text().toLowerCase().indexOf(value) === -1 ){//and text() check...
                                $(v).parent().hide();
-
+ 
                           }
                           else {
                                $(v).parent().show();
                                show++;
                           }
-
+                          
                     });
-
-                    if(options.filterResult === true)
+                     
+                    if(options.filterResult === true) 
                         $("div#"+rel+" ul li.filterResult").text(options.filterResultText + ' '+show+'/'+tot);
-
+                    
                 });
         }//end filter
-
-
+        
+        
         if(options.live !== undefined){
             var rel = this.attr('rel');
             $(".zselect#"+rel).on('change','input:checkbox',function(e){
                 $(options.live).val( methods.getValue($("select[rel='"+rel+"']")) );
             });
         }//end live
-
-
-        if(options.get !== undefined){
+        
+        
+        if(options.get !== undefined){ 
             var query = window.location.search.substring(1);
             var vars = query.split("&");
             var need = false;
             for (var i=0;i<vars.length;i++) {
                 var pair = vars[i].split("=");
                 if (pair[0] == options.get) {
-
+                    
                   need = pair[1].replace(',','%2C').split('%2C');
-
+                  
                 }
-            }
-
+            } 
+            
             if(need){
                 var rel = this.attr('rel');
                 for(var i=0; i<need.length; i++){
                     //console.log(need[i]);
                     $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").trigger('click');
-
+                   
                 }
                 refreshPlaceholder(rel,options.placeholder,options.localizedCounter);
             }
@@ -229,13 +229,13 @@ var methods = {
             refreshPlaceholder(rel,options.placeholder,options.localizedCounter);
         });
 
-        //onResize();
+        onResize();
 
 
     },
-
-    getValue : function(selector) {
-       if(selector===undefined) selector = this;
+    
+    getValue : function(selector) { 
+       if(selector===undefined) selector = this; 
        var value = new Array();
        var rel   = $(selector).attr('rel');
        $.each( $("div#"+rel+" ul li input"), function(k,v){
@@ -246,16 +246,16 @@ var methods = {
        });
        return value;
     },
-
-
+    
+        
     open : function( ) {
         $("div#"+$(this).attr('rel')+" ul").show();
     },
     close : function( ) {
         $("div#"+$(this).attr('rel')+" ul").hide();
     },
-
-
+    
+            
     disable : function (val,state){ //console.log(state);
         if(val!==undefined){
             if(state) $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").attr('disabled','disabled');
@@ -286,8 +286,8 @@ var methods = {
     },
     reflow : function(){
         onResize(true);
-    }
-
+    }        
+            
     //,update : function( content ) {  }
     };
 
@@ -306,7 +306,7 @@ $.fn.zmultiselect = function(methodOrOptions) {
         return methods.init.apply( this, arguments );
     } else {
         $.error( 'Method ' +  methodOrOptions + ' does not exist on zmultiselect' );
-    }
+    }    
     };
 
 
