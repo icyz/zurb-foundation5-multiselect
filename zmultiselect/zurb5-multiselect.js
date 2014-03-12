@@ -71,7 +71,7 @@
         //when resize window + init
         function onResize(reflow){ 
             $.each( $(".zselect"), function(k,v){
-                if( $(v).find("ul").attr('style') !== undefined && reflow !== true ) return false; //break if already set
+                //if( $(v).find("ul").attr('style') !== undefined && reflow !== true ) return false; //break if already set
                 
                 var w = $(v).outerWidth(); 
                 
