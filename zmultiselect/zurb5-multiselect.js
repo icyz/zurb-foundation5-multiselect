@@ -94,8 +94,8 @@
         });
 
 
-        function refreshPlaceholder(rel, placeholder, localizedCounter){
-            var counter = localizedCounter || ['Selezionati ', 'di '];
+        function refreshPlaceholder(rel, placeholder, selectedText){
+            var counter = selectedText || ['Selezionati ', 'di '];
             var checked=$("div#"+rel+" ul li input:checked").length;
             var tot=$("div#"+rel+" ul li input:checkbox").length;
 
@@ -220,13 +220,13 @@ var methods = {
                     $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").trigger('click');
                    
                 }
-                refreshPlaceholder(rel,options.placeholder,options.localizedCounter);
+                refreshPlaceholder(rel,options.placeholder,options.selectedText);
             }
         }
 
         //placeholder dopo click
         $(".zselect#"+rel).on('change','input:checkbox',function(){
-            refreshPlaceholder(rel,options.placeholder,options.localizedCounter);
+            refreshPlaceholder(rel,options.placeholder,options.selectedText);
         });
 
         onResize();
