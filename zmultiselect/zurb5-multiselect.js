@@ -67,6 +67,11 @@
            $(this).parent().find("input:checkbox[disabled!='disabled']").prop('checked', state).change();
         });
         
+        //optgroup
+        $(document).on('click','.optgroup', function(){ 
+           $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', function( i, val ) { return !val; }).change();
+        });
+        
         
         //when resize window + init
         function onResize(reflow){ 
@@ -114,6 +119,10 @@ var methods = {
     init : function(options) {
         
         var id,checked,disabled="",disabledClass="";
+        var optgroup=[];
+        var optgroup_size,optgroup_id = 0;
+        var optgroup_name = false;
+        
         $.each( $(this),function(k,v){
         
             id=Math.random().toString(36).substr(2, 9);
@@ -133,6 +142,17 @@ var methods = {
             }
             
             $.each(v, function(j,z){
+                
+                var appendTo;
+                if( $(z).parent().attr("label") !== undefined && optgroup.indexOf($(z).parent().attr("label"))===-1 ){
+                    optgroup_size = $(z).parent().find('option').size();
+                    optgroup_name = $(z).parent().attr("label");  
+                    
+                    $('#'+id+' ul').append("<li class='optgroup' data-optgroup='"+optgroup_id+"'>"+$(z).parent().attr("label")+"</li>");
+                    $('#'+id+' ul').append($("<div>").addClass('optgroup_'+optgroup_id));
+                    optgroup.push($(z).parent().attr("label"));
+                }
+                //console.log( $(z).attr('value') + " " + $(z).text() );
                 //console.log( $(z).attr('value') + " " + $(z).text() );
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
@@ -146,8 +166,18 @@ var methods = {
                     disabled = disabledClass = "";
                 }
                 
+                if( optgroup_name === false ) appendTo = '#'+id+' ul';
+                else                          appendTo = '#'+id+' ul div.optgroup_'+optgroup_id;
+                    
+                    
+                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+$(z).text()+"</li>");
                 
-                $('#'+id+' ul').append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+$(z).text()+"</li>");
+                if(optgroup_size === j+1){
+                    optgroup_size = 0;
+                    optgroup_id ++;
+                    optgroup_name = false;
+                }
+                
                 
             });
             $('#'+id+' span.zmshead').html( (options.placeholder===undefined) ? '&nbsp;' : options.placeholder );

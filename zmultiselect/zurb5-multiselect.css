@@ -25,11 +25,11 @@
         border: 1px solid #cccccc;
         border-top:none;
         padding:0;
+        
         margin:11px 0 0 -0.76rem;
         z-index:10;
         list-style-type: none;
         display:none;
-        
         /*
         
         
@@ -58,7 +58,9 @@
 .zselect ul li.zmsfilter,
 .zselect ul li.zmsfilter:hover,
 .zselect ul li.filterResult,
-.zselect ul li.filterResult:hover{
+.zselect ul li.filterResult:hover,
+.zselect ul li.optgroup,
+.zselect ul li.optgroup:hover{
         background-color:transparent;
         color: #000;
        
@@ -74,3 +76,10 @@
 .zselect ul li.filterResult{
         font-size: 0.8em;
 }
+
+.zselect ul li.optgroup{
+    font-weight: bold;
+    cursor:pointer;
+}
+.zselect ul li.selectall{}
+.zselect ul li.deselectall{}
