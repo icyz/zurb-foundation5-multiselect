@@ -100,7 +100,7 @@
 
 
         function refreshPlaceholder(rel, placeholder, selectedText){
-            var counter = selectedText || ['Selezionati ', 'di '];
+            var counter = selectedText || ['Selected ', 'of '];
             var checked=$("div#"+rel+" ul li input:checked").length;
             var tot=$("div#"+rel+" ul li input:checkbox").length;
 

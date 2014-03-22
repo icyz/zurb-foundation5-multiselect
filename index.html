@@ -17,7 +17,7 @@
     </style>
   </head>
   <body>
-      
+
     <a href="https://github.com/icyz/zurbfoundation5-multiselect"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
     
     <div class="row">
@@ -68,7 +68,7 @@
         
         <h4>Demo</h4>
         <form>
-           
+
             <div class="row">
               <div class="large-6 columns">
                   
@@ -76,6 +76,7 @@
                   
                 <label for="box1">ZMultiSelect Box #1</label>
                 <select id="box1">
+                  <optgroup label='Languages'>
                   <option value="php">PHP</option>
                   <option value="php4">PHP4</option>
                   <option value="php5">PHP5</option>
@@ -84,6 +85,11 @@
                   <option value="ruby">ruby</option>
                   <option value="cplusplus">c++</option>
                   <option value="java" data-disabled>java (disabled!)</option>
+                  </optgroup>
+                  <optgroup label='Food'>
+                  <option value="pizza">pizza</option>
+                  <option value="maccheroni">maccheroni</option>
+                  </optgroup>
                 </select>
                 
                 
@@ -162,8 +168,32 @@
 
     </div>
     
+    
     <div class="row" style="margin-top:40px;">
-        <div class="large-12 columns">  
+        <div class="large-12 columns">
+            <h4>Optgroup <span class="label alert">N E W</span></h4>
+            <div>Optgroup is now supported:</div>
+<pre class='prettyprint'>
+&lt;select>
+    &lt;optgroup label='Food'>
+      &lt;option>HotDog&lt;/option>
+      &lt;option data-selected>Pizza&lt;/option>
+      &lt;option>Spaghetti&lt;/option>
+    &lt;/optgroup>
+    &lt;optgroup label='Colors'>
+      &lt;option>Red&lt;/option>
+      &lt;option data-selected>Black&lt;/option>
+      &lt;option>Orange&lt;/option>
+      &lt;option>Purple&lt;/option>
+    &lt;/optgroup>
+&lt;/select>
+            </pre>
+            <div>Look at "JS" in #box1.</div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px;">
+        <div class="large-12 columns">
             <h4>Tips</h4>
             <div>You can pre-select an option using data-selected into your &lt;select>. e.g:</div>
 <pre class='prettyprint'>
