@@ -157,6 +157,7 @@ var methods = {
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
                 checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                dataZ = ( $(z).data("z") !== undefined ) ? 'data-z="' + $(z).data("z") + '"' : "";
                 
                 if( $(z).is('[data-disabled]') ){
                     disabled = "disabled='disabled'";
@@ -170,7 +171,7 @@ var methods = {
                 else                          appendTo = '#'+id+' ul div.optgroup_'+optgroup_id;
                     
                     
-                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+$(z).text()+"</li>");
+                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
                 
                 if(optgroup_size === j+1){
                     optgroup_size = 0;
