@@ -11,35 +11,14 @@
 
 (function($) {
     
-        
-    
-        //conflitto da risolvere:
-        //le prime due funzioni si danno noia
-
-        //todo: click out for close the dropdown
+       
+	    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
         $(document).mouseup(function (e){
-        var container = $(".zselect ul");
-            if (!container.is(e.target) && container.has(e.target).length === 0) {
-                container.hide();
+			var container = $(".zselect ul");
+            if ( container.parent().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
+                container.toggle();
                 //console.log(e.target);
             }
-            else{
-                //console.log(e.target);
-                //console.log('else');
-            }
-            
-        });
-        
-        
-        //open dropdown onclick
-        $(document).on('click', '.zselect', function(e){
-           var click = $(e.target).prop("tagName");
-           //console.log(click);
-           if(click!=='LI' && click!=='INPUT'){
-                    $("li.zmsfilter input").val('').keyup(); //clean filter
-                    $("ul",this).toggle(); 
-           }
-            
         });
         
         
