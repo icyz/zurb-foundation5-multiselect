@@ -2,8 +2,9 @@
         margin: 0 0 1rem 0;
         -webkit-appearance: none !important;
         background: #fafafa url("data:image/svg+xml;base64, PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iM3B4IiB2aWV3Qm94PSIwIDAgNiAzIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA2IDMiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwb2x5Z29uIHBvaW50cz0iNS45OTIsMCAyLjk5MiwzIC0wLjAwOCwwICIvPjwvc3ZnPg==") no-repeat;
-        background-position-x: 97%;
-        background-position-y: center;
+		background-position: 97% center;
+        /*background-position-x: 97%;
+        background-position-y: center;*/
         border: 1px solid #cccccc;
         padding: 0.70rem;
         font-size: 0.77778rem;
@@ -30,10 +31,6 @@
         z-index:10;
         list-style-type: none;
         display:none;
-        /*
-        
-        
-        */
 }
 .zselect span.zmshead{
         font-size: 0.9rem;
@@ -41,8 +38,6 @@
 .zselect ul li{
         padding:4px 0.70rem 0px 0.70rem;
         font-size:0.9rem;
-        /*line-height:1.5rem;*/
-        
 }
 .zselect ul li span{
         
