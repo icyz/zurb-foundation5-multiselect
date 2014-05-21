@@ -156,7 +156,7 @@ var methods = {
                 //console.log( $(z).attr('value') + " " + $(z).text() );
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-                checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                checked = ( $(z).is('[data-selected]')  || $(z).is('[selected]') ) ? "checked='checked'" : "";
                 dataZ = ( $(z).data("z") !== undefined ) ? 'data-z="' + $(z).data("z") + '"' : "";
                 
                 if( $(z).is('[data-disabled]') ){
@@ -258,6 +258,20 @@ var methods = {
         //placeholder dopo click
         $(".zselect#"+rel).on('change','input:checkbox',function(){
             refreshPlaceholder(rel,options.placeholder,options.selectedText);
+            
+            select_id = '#'+$('select[rel='+rel+']').attr('id')
+      		$.each( $("div#"+rel+" ul li input"), function(k,v){
+	          	if( $(v).val() !== undefined ){
+	               if( $(v).prop('checked') ){
+	               		//console.log(k+' '+$(v).val())
+	               		$(select_id+" option[value='"+$(v).val()+"']").attr("selected", true);
+
+	               		console.log($(select_id+" option[value='"+$(v).val()+"']"));
+	          		}else{
+	          			$(select_id+" option[value='"+$(v).val()+"']").attr("selected", false);
+	          		}
+	          	}
+       		});            
         });
 
         onResize();
