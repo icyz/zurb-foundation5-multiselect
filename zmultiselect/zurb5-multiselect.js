@@ -265,6 +265,9 @@ var methods = {
 
     },
     
+    
+    
+    
     getValue : function(selector) { 
        if(selector===undefined) selector = this; 
        var value = new Array();
@@ -317,13 +320,32 @@ var methods = {
     },
     reflow : function(){
         onResize(true);
-    }        
+    },   
+    
+    add : function(option, pos){
+        var position = pos || 'append';
+        var checked='', disabled='', disabledClass='';
+        
+        if(option.checked)  checked=' checked="checked" ';
+        if(option.disabled) {disabled=' disabled="disabled" '; disabledClass=' class="disabled" ';}
+        
+        if(position === 'append') $("div#"+$(this).attr('rel')+" ul").append("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>");
+        else {
+            if(position === 'prepend'){
+               $("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>").insertAfter($("div#"+$(this).attr('rel')+" ul li.deselectall"));
+            }
+            else{
+               $("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>").insertAfter($("div#"+$(this).attr('rel')+" ul li input[value='"+position.substring(1)+"']").closest('li')); 
+            }
+        }
+        
+        
+        
+          
+    }
             
     //,update : function( content ) {  }
     };
-
-
-
 
 
 

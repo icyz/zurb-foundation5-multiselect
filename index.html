@@ -222,6 +222,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <tr>
                         <td>placeholder</td>
                         <td>Set placeholder text when checkbox aren't checked</td>
@@ -343,6 +344,25 @@ $("#multiselect").zmultiselect('disable','hotdot',false);</pre></td>
                         <td>destroy</td>
                         <td>Remove option</td>
                         <td><pre class='prettyprint'>$("#multiselect").zmultiselect('destroy', 'hotdog');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>getValue</td>
+                        <td>Return an array of selected items</td>
+                        <td><pre class='prettyprint'>$("#multiselect").zmultiselect('getValue');</pre></td>
+                    </tr>
+                    <tr>
+                        <td>add</td>
+                        <td>Dynamically append or prepend new items</td>
+                        <td><pre class='prettyprint'>var newItem = new Object();
+newItem.value="checkbox_value";
+newItem.text="Hello!";
+$("#multiselect").zmultiselect('add', newItem, 'append');
+or
+$("#multiselect").zmultiselect('add', newItem, 'prepend');
+or
+$("#multiselect").zmultiselect('add', newItem, '&hotdog');
+using the "&" symbol allow to insert the new item after selected checkbox; for example this new item is appended to "Hot Dog" checkbox
+
                     </tr>
                 </tbody>
             </table>
