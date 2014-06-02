@@ -23,6 +23,7 @@
     "bower_components",
     "test",
     "tests",
+    "js",
     "js/*",
     "index.html"
   ]
