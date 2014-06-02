@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "homepage": "https://github.com/michelts/zurbfoundation5-multiselect",
   "authors": [
-    "Michel Sabchuk <michel@turbosys.com.br>"
+    "Andrea Mariani <me@andreamariani.net>"
   ],
   "description": "Multiselect plugin for zurb foundation 5",
   "main": "zmultiselect/zurb5-multiselect.js",
