@@ -14,7 +14,7 @@
     "select"
   ],
   "dependencies": [
-    "foundation": ">5.0",
+    "foundation": ">5.0"
   ],
   "license": "MIT",
   "ignore": [
