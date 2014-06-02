@@ -13,9 +13,9 @@
     "multi",
     "select"
   ],
-  "dependencies": [
+  "dependencies": {
     "foundation": ">5.0"
-  ],
+  },
   "license": "MIT",
   "ignore": [
     "**/.*",
