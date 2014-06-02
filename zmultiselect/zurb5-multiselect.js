@@ -152,11 +152,10 @@ var methods = {
                     $('#'+id+' ul').append($("<div>").addClass('optgroup_'+optgroup_id));
                     optgroup.push($(z).parent().attr("label"));
                 }
-                //console.log( $(z).attr('value') + " " + $(z).text() );
-                //console.log( $(z).attr('value') + " " + $(z).text() );
+                //console.log( $(z).attr('value') + " " + $(z).text() + " " + $(z).is('[data-selected]') + " " + $(z).is(':selected'));
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-                checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                checked = ( $(z).is('[data-selected]') || $(z).is(':selected')) ? "checked='checked'" : "";
                 dataZ = ( $(z).data("z") !== undefined ) ? 'data-z="' + $(z).data("z") + '"' : "";
                 
                 if( $(z).is('[data-disabled]') ){
