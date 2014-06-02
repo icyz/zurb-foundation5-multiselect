@@ -1,0 +1,24 @@
+{
+  "name": "foundation-multiselect",
+  "version": "0.3.0",
+  "homepage": "https://github.com/michelts/zurbfoundation5-multiselect",
+  "authors": [
+    "Michel Sabchuk <michel@turbosys.com.br>"
+  ],
+  "description": "Multiselect plugin for zurb foundation 5",
+  "main": "zmultiselect/zurb5-multiselect.js",
+  "keywords": [
+    "foundation",
+    "zurb",
+    "multi",
+    "select"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
