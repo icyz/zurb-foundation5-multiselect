@@ -254,20 +254,16 @@ var methods = {
             }
         }
 
-        //placeholder dopo click
+        // placeholder dopo click
         $(".zselect#"+rel).on('change','input:checkbox',function(){
             refreshPlaceholder(rel,options.placeholder,options.selectedText);
-            
-            select_id = '#'+$('select[rel='+rel+']').attr('id')
-      		$.each( $("div#"+rel+" ul li input"), function(k,v){
+            var select = $('select[rel='+rel+']');
+      		$.each( $(".zselect#"+rel+" ul li input"), function(k,v){
 	          	if( $(v).val() !== undefined ){
 	               if( $(v).prop('checked') ){
-	               		//console.log(k+' '+$(v).val())
-	               		$(select_id+" option[value='"+$(v).val()+"']").attr("selected", true);
-
-	               		//console.log($(select_id+" option[value='"+$(v).val()+"']"));
+	               		select.find("option[value='"+$(v).val()+"']").attr("selected", true);
 	          		}else{
-	          			$(select_id+" option[value='"+$(v).val()+"']").attr("selected", false);
+	          			select.find("option[value='"+$(v).val()+"']").attr("selected", false);
 	          		}
 	          	}
        		});            
