@@ -254,19 +254,22 @@ var methods = {
             }
         }
 
-        // placeholder dopo click
-        $(".zselect#"+rel).on('change','input:checkbox',function(){
-            refreshPlaceholder(rel,options.placeholder,options.selectedText);
+        // Updates original select after checkbox update
+        $(".zselect").on('change', 'input:checkbox', function() {
+            var container = $(this).closest('.zselect');
+            var rel = container.attr('id');
+            refreshPlaceholder(rel, options.placeholder, options.selectedText);
+
             var select = $('select[rel='+rel+']');
-      		$.each( $(".zselect#"+rel+" ul li input"), function(k,v){
-	          	if( $(v).val() !== undefined ){
-	               if( $(v).prop('checked') ){
-	               		select.find("option[value='"+$(v).val()+"']").attr("selected", true);
-	          		}else{
-	          			select.find("option[value='"+$(v).val()+"']").attr("selected", false);
-	          		}
-	          	}
-       		});            
+            $.each(container.find('input:checkbox'), function(k, v) {
+                if($(v).val() !== undefined){
+                    if($(v).prop('checked')) {
+                        select.find("option[value='"+$(v).val()+"']").attr("selected", true);
+                    } else {
+                        select.find("option[value='"+$(v).val()+"']").attr("selected", false);
+                    }
+                }
+            });
         });
 
         onResize();
