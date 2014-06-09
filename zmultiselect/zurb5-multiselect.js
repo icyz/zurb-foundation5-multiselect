@@ -54,7 +54,7 @@
         
         
         //click on label toggle input
-        $(document).on('click', 'li', function(e){ 
+        $(document).on('click', '.zselect li', function(e){ 
             if($(e.target).prop("tagName") !== "INPUT"){
                     $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
             }
