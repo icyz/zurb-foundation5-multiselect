@@ -16,18 +16,12 @@
         //conflitto da risolvere:
         //le prime due funzioni si danno noia
 
-        //todo: click out for close the dropdown
-        $(document).mouseup(function (e){
-        var container = $(".zselect ul");
-            if (!container.is(e.target) && container.has(e.target).length === 0) {
-                container.hide();
-                //console.log(e.target);
+        //click out for close the dropdown
+        $(document).on('click', 'body', function (e){
+            target = $(e.target);
+            if(!target.hasClass('multiselect') && target.parents('.multiselect').length === 0){
+              $('.zselect ul').hide();
             }
-            else{
-                //console.log(e.target);
-                //console.log('else');
-            }
-            
         });
         
         
