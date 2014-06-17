@@ -152,11 +152,10 @@ var methods = {
                     $('#'+id+' ul').append($("<div>").addClass('optgroup_'+optgroup_id));
                     optgroup.push($(z).parent().attr("label"));
                 }
-                //console.log( $(z).attr('value') + " " + $(z).text() );
-                //console.log( $(z).attr('value') + " " + $(z).text() );
+                //console.log( $(z).attr('value') + " " + $(z).text() + " " + $(z).is('[data-selected]') + " " + $(z).is(':selected'));
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-                checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                checked = ( $(z).is('[data-selected]') || $(z).is(':selected')) ? "checked='checked'" : "";
                 dataZ = ( $(z).data("z") !== undefined ) ? 'data-z="' + $(z).data("z") + '"' : "";
                 
                 if( $(z).is('[data-disabled]') ){
@@ -255,9 +254,22 @@ var methods = {
             }
         }
 
-        //placeholder dopo click
-        $(".zselect#"+rel).on('change','input:checkbox',function(){
-            refreshPlaceholder(rel,options.placeholder,options.selectedText);
+        // Updates original select after checkbox update
+        $(".zselect").on('change', 'input:checkbox', function() {
+            var container = $(this).closest('.zselect');
+            var rel = container.attr('id');
+            refreshPlaceholder(rel, options.placeholder, options.selectedText);
+
+            var select = $('select[rel='+rel+']');
+            $.each(container.find('input:checkbox'), function(k, v) {
+                if($(v).val() !== undefined){
+                    if($(v).prop('checked')) {
+                        select.find("option[value='"+$(v).val()+"']").attr("selected", true);
+                    } else {
+                        select.find("option[value='"+$(v).val()+"']").attr("selected", false);
+                    }
+                }
+            });
         });
 
         onResize();
