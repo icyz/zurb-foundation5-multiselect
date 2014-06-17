@@ -1,0 +1,30 @@
+{
+  "name": "foundation-multiselect",
+  "version": "0.3.0",
+  "homepage": "https://github.com/icyz/zurbfoundation5-multiselect",
+  "authors": [
+    "Andrea Mariani <me@andreamariani.net>"
+  ],
+  "description": "Multiselect plugin for zurb foundation 5",
+  "main": "zmultiselect/zurb5-multiselect.js",
+  "keywords": [
+    "foundation",
+    "zurb",
+    "multi",
+    "select"
+  ],
+  "dependencies": {
+    "foundation": ">5.0"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "js",
+    "js/*",
+    "index.html"
+  ]
+}
