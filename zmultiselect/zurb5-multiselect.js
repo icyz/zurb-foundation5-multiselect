@@ -100,12 +100,17 @@
 
 
         function refreshPlaceholder(rel, placeholder, selectedText) {
-             selectedText = selectedText || "Selected %1 of %2"; 
+             selectedText = selectedText || "Selected %1 item%s1 of %2 item%s2"; 
              var checked=$("div#"+rel+" ul li input:checked").length; 
              var tot=$("div#"+rel+" ul li input:checkbox").length; 
   
-             if(checked>0) { 
-                 var txt = selectedText.replace(/%1/g, checked).replace(/%2/g, tot); 
+             if(checked>0) {
+                 var checkedS = checked > 1 ? "s" : "";
+                 var totS = tot > 1 ? "s" : "";
+                 var txt = selectedText.replace(/%1/g, checked)
+                                       .replace(/%2/g, tot)
+                                       .replace(/%s1/g, checkedS)
+                                       .replace(/%s2/g, totS);
                  $(".zselect#"+rel+" span.zmshead").text(txt); 
              } else { 
                  $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder ); 
