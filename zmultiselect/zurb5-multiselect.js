@@ -99,17 +99,17 @@
         });
 
 
-        function refreshPlaceholder(rel, placeholder, selectedText){
-            var counter = selectedText || ['Selected ', 'of '];
-            var checked=$("div#"+rel+" ul li input:checked").length;
-            var tot=$("div#"+rel+" ul li input:checkbox").length;
-
-            if(checked>0) {
-                $(".zselect#"+rel+" span.zmshead").text(counter[0]+" "+checked+" "+counter[1]+" "+tot);
-            }
-            else {
-                $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder );
-            }
+        function refreshPlaceholder(rel, placeholder, selectedText) {
+             selectedText = selectedText || "Selected %1 of %2"; 
+             var checked=$("div#"+rel+" ul li input:checked").length; 
+             var tot=$("div#"+rel+" ul li input:checkbox").length; 
+  
+             if(checked>0) { 
+                 var txt = selectedText.replace(/%1/g, checked).replace(/%2/g, tot); 
+                 $(".zselect#"+rel+" span.zmshead").text(txt); 
+             } else { 
+                 $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder ); 
+             }
         }
 
 
