@@ -173,7 +173,7 @@ var methods = {
                 else                          appendTo = '#'+id+' ul div.optgroup_'+optgroup_id;
                     
                     
-                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' name="+checkboxesName+" "+checke    d+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
+                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' name="+checkboxesName+" "+checked+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
                 
                 if(optgroup_size === j+1){
                     optgroup_size = 0;
