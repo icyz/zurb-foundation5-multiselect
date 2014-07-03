@@ -119,6 +119,7 @@ var methods = {
     init : function(options) {
         
         var id,checked,disabled="",disabledClass="";
+        var checkboxesName = "";
         var optgroup=[];
         var optgroup_size,optgroup_id = 0;
         var optgroup_name = false;
@@ -126,6 +127,8 @@ var methods = {
         $.each( $(this),function(k,v){
         
             id=Math.random().toString(36).substr(2, 9);
+            checkboxesName = $(v).attr('name')+"[]";
+            $(v).attr('data-name', checkboxesName).removeAttr('name');
             $(v).hide().attr('rel',id);  
             $(v).parent().append("<div id='"+id+"' class='zselect'><span class='zmshead'></span><ul></ul></div>");
             
@@ -170,7 +173,7 @@ var methods = {
                 else                          appendTo = '#'+id+' ul div.optgroup_'+optgroup_id;
                     
                     
-                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
+                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' name="+checkboxesName+" "+checke    d+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
                 
                 if(optgroup_size === j+1){
                     optgroup_size = 0;
@@ -337,17 +340,18 @@ var methods = {
     add : function(option, pos){
         var position = pos || 'append';
         var checked='', disabled='', disabledClass='';
+        var checkboxesName = $(this).attr('data-name');
         
         if(option.checked)  checked=' checked="checked" ';
         if(option.disabled) {disabled=' disabled="disabled" '; disabledClass=' class="disabled" ';}
         
-        if(position === 'append') $("div#"+$(this).attr('rel')+" ul").append("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>");
+        if(position === 'append') $("div#"+$(this).attr('rel')+" ul").append("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' name="+checkboxesName+" "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>");
         else {
             if(position === 'prepend'){
-               $("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>").insertAfter($("div#"+$(this).attr('rel')+" ul li.deselectall"));
+               $("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' name="+checkboxesName+" "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>").insertAfter($("div#"+$(this).attr('rel')+" ul li.deselectall"));
             }
             else{
-               $("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>").insertAfter($("div#"+$(this).attr('rel')+" ul li input[value='"+position.substring(1)+"']").closest('li')); 
+               $("<li "+disabledClass+"><input value='"+option.value+"' type='checkbox' name="+checkboxesName+" "+checked+" "+disabled+" />&nbsp;"+option.text+"</li>").insertAfter($("div#"+$(this).attr('rel')+" ul li input[value='"+position.substring(1)+"']").closest('li')); 
             }
         }
         
