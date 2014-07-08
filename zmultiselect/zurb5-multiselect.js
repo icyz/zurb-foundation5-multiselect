@@ -269,12 +269,13 @@ var methods = {
             $.each(container.find('input:checkbox'), function(k, v) {
                 if($(v).val() !== undefined){
                     if($(v).prop('checked')) {
-                        select.find("option[value='"+$(v).val()+"']").attr("selected", true);
+                        select.find("option[value='"+$(v).val()+"']").prop("selected", true);
                     } else {
-                        select.find("option[value='"+$(v).val()+"']").attr("selected", false);
+                        select.find("option[value='"+$(v).val()+"']").prop("selected", false);
                     }
                 }
             });
+            select.trigger('change');
         });
 
         onResize();
