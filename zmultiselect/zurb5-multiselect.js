@@ -127,7 +127,8 @@ var methods = {
         var optgroup=[];
         var optgroup_size,optgroup_id = 0;
         var optgroup_name = false;
-        
+        var items = 0;
+
         $.each( $(this),function(k,v){
         
             id=Math.random().toString(36).substr(2, 9);
@@ -147,10 +148,10 @@ var methods = {
             }
             
             $.each(v, function(j,z){
-                
                 var appendTo;
                 if( $(z).parent().attr("label") !== undefined && optgroup.indexOf($(z).parent().attr("label"))===-1 ){
                     optgroup_size = $(z).parent().find('option').size();
+                    //console.log(optgroup_size);
                     optgroup_name = $(z).parent().attr("label");  
                     
                     $('#'+id+' ul').append("<li class='optgroup' data-optgroup='"+optgroup_id+"'>"+$(z).parent().attr("label")+"</li>");
@@ -176,8 +177,10 @@ var methods = {
                     
                     
                 $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
-                
-                if(optgroup_size === j+1){
+                items += 1;
+
+                if(optgroup_size === items){
+                    items = 0;
                     optgroup_size = 0;
                     optgroup_id ++;
                     optgroup_name = false;
