@@ -11,35 +11,14 @@
 
 (function($) {
     
-        
-    
-        //conflitto da risolvere:
-        //le prime due funzioni si danno noia
-
-        //todo: click out for close the dropdown
+       
+	    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
         $(document).mouseup(function (e){
-        var container = $(".zselect ul");
-            if (!container.is(e.target) && container.has(e.target).length === 0) {
-                container.hide();
+			var container = $(".zselect ul");
+            if ( container.parent().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
+                container.toggle();
                 //console.log(e.target);
             }
-            else{
-                //console.log(e.target);
-                //console.log('else');
-            }
-            
-        });
-        
-        
-        //open dropdown onclick
-        $(document).on('click', '.zselect', function(e){
-           var click = $(e.target).prop("tagName");
-           //console.log(click);
-           if(click!=='LI' && click!=='INPUT'){
-                    $("li.zmsfilter input").val('').keyup(); //clean filter
-                    $("ul",this).toggle(); 
-           }
-            
         });
         
         
@@ -127,6 +106,7 @@ var methods = {
         var optgroup=[];
         var optgroup_size,optgroup_id = 0;
         var optgroup_name = false;
+        var optgroup_members = 0;
         
         $.each( $(this),function(k,v){
         
@@ -151,6 +131,7 @@ var methods = {
                 var appendTo;
                 if( $(z).parent().attr("label") !== undefined && optgroup.indexOf($(z).parent().attr("label"))===-1 ){
                     optgroup_size = $(z).parent().find('option').size();
+                    optgroup_members += optgroup_size;
                     optgroup_name = $(z).parent().attr("label");  
                     
                     $('#'+id+' ul').append("<li class='optgroup' data-optgroup='"+optgroup_id+"'>"+$(z).parent().attr("label")+"</li>");
@@ -177,7 +158,7 @@ var methods = {
                     
                 $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
                 
-                if(optgroup_size === j+1){
+                if(optgroup_members === j+1) {
                     optgroup_size = 0;
                     optgroup_id ++;
                     optgroup_name = false;
