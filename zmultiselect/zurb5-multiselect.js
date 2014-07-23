@@ -101,7 +101,7 @@
 
 var methods = {
     init : function(options) {
-        
+        var options = options || {};
         var id,checked,disabled="",disabledClass="";
         var optgroup=[];
         var optgroup_size,optgroup_id = 0;
