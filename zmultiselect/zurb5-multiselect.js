@@ -12,9 +12,9 @@
 (function($) {
     
        
-        //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
+	    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
         $(document).mouseup(function (e){
-            var container = $(".zselect ul");
+			var container = $(".zselect ul");
             if ( container.parent().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
                 container.toggle();
                 //console.log(e.target);
@@ -43,7 +43,7 @@
         //select all and deselect all
         $(document).on('click','.selectall,.deselectall', function(){
            var state = ($(this).hasClass('selectall'))?true:false;
-           $(this).parent().find("input:checkbox[disabled!='disabled']:visible").prop('checked', state).change();
+           $(this).parent().find("input:checkbox[disabled!='disabled']").prop('checked', state).change();
         });
         
         //optgroup
