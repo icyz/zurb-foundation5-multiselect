@@ -12,9 +12,9 @@
 (function($) {
     
        
-        //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
+            //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
         $(document).mouseup(function (e){
-            var container = $(".zselect ul");
+                    var container = $(".zselect ul");
             if ( container.parent().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
                 container.toggle();
                 //console.log(e.target);
