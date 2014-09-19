@@ -34,10 +34,15 @@
         
         //click on label toggle input
         $(document).on('click', '.zselect li', function(e){ 
+            var zbefore_change_event = $.Event('zbefore_change');
+            $(this).trigger(zbefore_change_event);
+            if(zbefore_change_event.result === false) {
+                e.stopPropagation(); 
+                return;
+            }
             if($(e.target).prop("tagName") !== "INPUT"){
                     $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
-            }
-            
+            }            
         });
         
         //select all and deselect all
