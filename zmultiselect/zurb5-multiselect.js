@@ -33,11 +33,13 @@
         
         
         //click on label toggle input
-        $(document).on('click', '.zselect li', function(e){ 
+        $(document).on('click', '.zselect li, .zselect li input:checkbox', function(e){ 
             var zbefore_change_event = $.Event('zbefore_change');
             $(this).trigger(zbefore_change_event);
             if(zbefore_change_event.result === false) {
-                e.stopPropagation(); 
+                e.preventDefault();
+                $(this).attr("checked", false); // hack to keep placeholder text correct
+                $(this).trigger('change');
                 return;
             }
             if($(e.target).prop("tagName") !== "INPUT"){
