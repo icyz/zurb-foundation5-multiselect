@@ -55,6 +55,11 @@
         
         //optgroup
         $(document).on('click','.optgroup', function(){ 
+            var zbefore_optgroup_event = $.Event('zbefore_optgroup_event');
+            $(this).trigger(zbefore_optgroup_event);
+            if(zbefore_optgroup_event.result === false) {
+                return;
+            }
            $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', function( i, val ) { return !val; }).change();
         });
         
