@@ -34,14 +34,21 @@
         
         //click on label toggle input
         $(document).on('click', '.zselect li, .zselect li input:checkbox', function(e){ 
-            var zbefore_change_event = $.Event('zbefore_change');
+            var zbefore_change_event = $.Event('zbefore_change', {'target': e.target});
             $(this).trigger(zbefore_change_event);
             if(zbefore_change_event.result === false) {
                 e.preventDefault();
-                $(this).attr("checked", false); // hack to keep placeholder text correct
-                $(this).trigger('change');
+                if($(this).prop("tagName") == 'LI'){
+                    $(this).children().attr("checked", false);
+                    $(this).children().trigger('change')
+                }                    
+                else{
+                    $(this).attr("checked", false); // hack to keep placeholder text correct
+                    $(this).trigger('change');
+                }
                 return;
             }
+            $(this).trigger('change');
             if($(e.target).prop("tagName") !== "INPUT"){
                     $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
             }            
