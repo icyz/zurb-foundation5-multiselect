@@ -14,15 +14,15 @@
        
 	//toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
         $(document).on('click', function(e){    
-            var id;
+            var id=false;
             if(e.target.tagName == 'SPAN'){ id = $(e.target).parent().attr('id'); }
             if(e.target.tagName == 'DIV'){  id = $(e.target).attr('id'); }
 
             var container = $(".zselect ul");
         
             if ( container.parent().is(e.target) || container.prev().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
-                //container.find('.zselect#'+id).toggle();
-                $(".zselect#"+id+" ul").toggle();
+                if(!id) container.hide(); //when user click out 
+                else    $(".zselect#"+id+" ul").toggle();
             }
             
         });
