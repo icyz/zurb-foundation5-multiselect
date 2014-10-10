@@ -174,7 +174,8 @@ var methods = {
                 //console.log( $(z).attr('value') + " " + $(z).text() + " " + $(z).is('[data-selected]') + " " + $(z).is(':selected'));
                 //console.log(id);
                 //console.log( '#'+id+' ul' );
-                checked = ( $(z).is('[data-selected]') || $(z).is(':selected')) ? "checked='checked'" : "";
+                checked = ( $(z).is('[data-selected]') ) ? "checked='checked'" : "";
+                
                 dataZ = ( $(z).data("z") !== undefined ) ? 'data-z="' + $(z).data("z") + '"' : "";
                 
                 if( $(z).is('[data-disabled]') ){
@@ -249,15 +250,15 @@ var methods = {
         }//end live
         
         
-        if(options.get !== undefined){ 
+        if(options.get !== undefined){  console.log(options.get);
             var query = window.location.search.substring(1);
             var vars = query.split("&");
             var need = false;
             for (var i=0;i<vars.length;i++) {
                 var pair = vars[i].split("=");
                 if (pair[0] == options.get) {
-                    
-                  need = pair[1].replace(',','%2C').split('%2C');
+                
+                    need = pair[1].replace(new RegExp(',', 'g'), '%2C').split('%2C');
                   
                 }
             } 
@@ -265,8 +266,7 @@ var methods = {
             if(need){
                 var rel = this.attr('rel');
                 for(var i=0; i<need.length; i++){
-                    //console.log(need[i]);
-                    $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").trigger('click');
+                    $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").prop('checked',true);
                    
                 }
                 refreshPlaceholder(rel,options.placeholder,options.selectedText);
