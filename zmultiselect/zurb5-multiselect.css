@@ -36,7 +36,8 @@
         font-size: 0.9rem;
 }
 .zselect ul li{
-        
+        display: table;
+        width:100%;
         padding:4px 0.70rem 0px 0.70rem;
         font-size:0.9rem;
 }
@@ -67,7 +68,8 @@
 .zselect ul li input[type='checkbox']{ 
         padding:0;
         margin:0;
-        
+        display:table-cell;
+        margin-right: 4px;
 } 
 .zselect ul li.filterResult{
         font-size: 0.8em;

@@ -83,10 +83,10 @@
                 checked = true;
                 return false;    
             }
-           
-            
         });
+        
         $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', checked).change();
+        //old version mode: .prop('checked', function( i, val ) { return !val; }).change();
     });
 
 
@@ -189,7 +189,7 @@ var methods = {
                 else                          appendTo = '#'+id+' ul div.optgroup_'+optgroup_id;
                     
                     
-                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" "+dataZ+" />&nbsp;"+$(z).text()+"</li>");
+                $(appendTo).append("<li "+disabledClass+"><input value='"+$(z).val()+"' type='checkbox' "+checked+" "+disabled+" "+dataZ+" /><span style=\"width:100%;display:table-cell;\">"+$(z).text()+"</span></li>");
                 
                 if(optgroup_members === j+1) {
                     optgroup_size = 0;
