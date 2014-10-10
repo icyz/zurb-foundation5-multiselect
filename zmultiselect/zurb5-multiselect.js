@@ -13,9 +13,9 @@
     
        
 	    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
-        $(document).mouseup(function (e){
+        $(document).on('click', function(e){
 			var container = $(".zselect ul");
-            if ( container.parent().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
+            if ( container.parent().is(e.target) || container.prev().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
                 container.toggle();
                 //console.log(e.target);
             }
@@ -33,11 +33,25 @@
         
         
         //click on label toggle input
-        $(document).on('click', '.zselect li', function(e){ 
+        $(document).on('click', '.zselect li, .zselect li input:checkbox', function(e){ 
+            var zbefore_change_event = $.Event('zbefore_change', {'target': e.target});
+            $(this).trigger(zbefore_change_event);
+            if(zbefore_change_event.result === false) {
+                e.preventDefault();
+                if($(this).prop("tagName") == 'LI'){
+                    $(this).children().attr("checked", false);
+                    $(this).children().trigger('change')
+                }                    
+                else{
+                    $(this).attr("checked", false); // hack to keep placeholder text correct
+                    $(this).trigger('change');
+                }
+                return;
+            }
+            $(this).trigger('change');
             if($(e.target).prop("tagName") !== "INPUT"){
                     $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
-            }
-            
+            }            
         });
         
         //select all and deselect all
@@ -48,6 +62,11 @@
         
         //optgroup
         $(document).on('click','.optgroup', function(){ 
+            var zbefore_optgroup_event = $.Event('zbefore_optgroup_event');
+            $(this).trigger(zbefore_optgroup_event);
+            if(zbefore_optgroup_event.result === false) {
+                return;
+            }
            $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', function( i, val ) { return !val; }).change();
         });
         
