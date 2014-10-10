@@ -12,89 +12,117 @@
 (function($) {
     
        
-	    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
-        $(document).mouseup(function (e){
-			var container = $(".zselect ul");
-            if ( container.parent().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
-                container.toggle();
-                //console.log(e.target);
-            }
-        });
+    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
+    
+    $(document).on('click',  function(e){
         
         
-        //escape key for close all zselect
-        $(window).on('keydown', function(e){
-            e = e || window.event;
-            if (e.keyCode === 27) {
-                $("li.zmsfilter input").val('').keyup(); //clean filter
-                $(".zselect ul").hide();
-            }
-        });
+        var id;
+        if(e.target.tagName == 'SPAN'){ id = $(e.target).parent().attr('id'); }
+        if(e.target.tagName == 'DIV'){  id = $(e.target).attr('id'); }
         
+        var container = $(".zselect ul");
         
-        //click on label toggle input
-        $(document).on('click', 'li', function(e){ 
-            if($(e.target).prop("tagName") !== "INPUT"){
-                    $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
-            }
+        if ( container.parent().is(e.target) || container.prev().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
+            //container.find('.zselect#'+id).toggle();
             
-        });
-        
-        //select all and deselect all
-        $(document).on('click','.selectall,.deselectall', function(){
-           var state = ($(this).hasClass('selectall'))?true:false;
-           $(this).parent().find("input:checkbox[disabled!='disabled']").prop('checked', state).change();
-        });
-        
-        //optgroup
-        $(document).on('click','.optgroup', function(){ 
-           $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', function( i, val ) { return !val; }).change();
-        });
-        
-        
-        //when resize window + init
-        function onResize(reflow){ 
-            $.each( $(".zselect"), function(k,v){
-                //if( $(v).find("ul").attr('style') !== undefined && reflow !== true ) return false; //break if already set
-                
-                var w = $(v).outerWidth(); 
-                
-                $(v).find("ul").attr('style', 'width:'+w+'px!important;' );
-                
-                
-                //var size = Math.max(Math.min(w / (1), parseFloat(20)), parseFloat(11));
-                //console.log(size);
-                //$(v).find('ul li').css('font-size', size);
-                
-                var w_li = $(v).find('ul li:eq(0)').width();
-                //console.log(w_li);
-                
-            });
+            $(".zselect#"+id+" ul").toggle();
+          
             
+
         }
-        
-        $( window ).resize(function() {
-            onResize();
-        });
+    });
+    
+
+    //escape key for close all zselect
+    $(window).on('keydown', function(e){
+        e = e || window.event;
+        if (e.keyCode === 27) {
+            $("li.zmsfilter input").val('').keyup(); //clean filter
+            $(".zselect ul").hide();
+        }
+    });
 
 
-        function refreshPlaceholder(rel, placeholder, selectedText) {
-             selectedText = selectedText || "Selected %1 item%s1 of %2 item%s2"; 
-             var checked=$("div#"+rel+" ul li input:checked").length; 
-             var tot=$("div#"+rel+" ul li input:checkbox").length; 
-  
-             if(checked>0) {
-                 var checkedS = checked > 1 ? "s" : "";
-                 var totS = tot > 1 ? "s" : "";
-                 var txt = selectedText.replace(/%1/g, checked)
-                                       .replace(/%2/g, tot)
-                                       .replace(/%s1/g, checkedS)
-                                       .replace(/%s2/g, totS);
-                 $(".zselect#"+rel+" span.zmshead").text(txt); 
-             } else { 
-                 $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder ); 
-             }
+
+    //click on label toggle input
+    $(document).on('click', '.zselect li, .zselect li input:checkbox', function(e){ 
+        var zbefore_change_event = $.Event('zbefore_change', {'target': e.target});
+        $(this).trigger(zbefore_change_event);
+        if(zbefore_change_event.result === false) {
+            e.preventDefault();
+            if($(this).prop("tagName") == 'LI'){
+                $(this).children().attr("checked", false);
+                $(this).children().trigger('change')
+            }                    
+            else{
+                $(this).attr("checked", false); // hack to keep placeholder text correct
+                $(this).trigger('change');
+            }
+            return;
         }
+        $(this).trigger('change');
+        if($(e.target).prop("tagName") !== "INPUT"){
+                $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
+        }            
+    });
+    
+
+    //select all and deselect all
+    $(document).on('click','.selectall,.deselectall', function(){
+       var state = ($(this).hasClass('selectall'))?true:false;
+       $(this).parent().find("input:checkbox[disabled!='disabled']:visible").prop('checked', state).change();
+    });
+
+    //optgroup
+    $(document).on('click','.optgroup', function(){ 
+        var zbefore_optgroup_event = $.Event('zbefore_optgroup_event');
+        $(this).trigger(zbefore_optgroup_event);
+        if(zbefore_optgroup_event.result === false) {
+            return;
+        }
+       $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', function( i, val ) { return !val; }).change();
+    });
+
+
+    //when resize window + init
+    function onResize(reflow){ 
+        $.each( $(".zselect"), function(k,v){
+            //if( $(v).find("ul").attr('style') !== undefined && reflow !== true ) return false; //break if already set
+
+            var w = $(v).outerWidth(); 
+
+            $(v).find("ul").attr('style', 'width:'+w+'px!important;' );
+
+
+            //var size = Math.max(Math.min(w / (1), parseFloat(20)), parseFloat(11));
+            //console.log(size);
+            //$(v).find('ul li').css('font-size', size);
+
+            //var w_li = $(v).find('ul li:eq(0)').width();
+            //console.log(w_li);
+
+        });
+
+    }
+
+    $( window ).resize(function() {
+        onResize();
+    });
+
+    
+    function refreshPlaceholder(rel, placeholder, selectedText){ 
+        var counter = selectedText || ['Selezionati ', 'di '];
+        var checked=$("div#"+rel+" ul li input:checked").length;
+        var tot=$("div#"+rel+" ul li input:checkbox").length;
+
+        if(checked>0) {
+            $(".zselect#"+rel+" span.zmshead").text(counter[0]+" "+checked+" "+counter[1]+" "+tot);
+        }
+        else {
+            $(".zselect#"+rel+" span.zmshead").html( (placeholder===undefined) ? '&nbsp;' : placeholder );
+        }
+    }
 
 
 
@@ -102,7 +130,7 @@
 var methods = {
     init : function(options) {
         
-        var id,checked,disabled="",disabledClass="";
+        var id,checked,dataZ,disabled="",disabledClass="";
         var optgroup=[];
         var optgroup_size,optgroup_id = 0;
         var optgroup_name = false;
