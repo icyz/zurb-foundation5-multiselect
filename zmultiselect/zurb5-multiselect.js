@@ -57,7 +57,7 @@
         //select all and deselect all
         $(document).on('click','.selectall,.deselectall', function(){
            var state = ($(this).hasClass('selectall'))?true:false;
-           $(this).parent().find("input:checkbox[disabled!='disabled']").prop('checked', state).change();
+           $(this).parent().find("input:checkbox[disabled!='disabled']:visible").prop('checked', state).change();
         });
         
         //optgroup
