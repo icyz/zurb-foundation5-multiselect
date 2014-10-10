@@ -76,7 +76,17 @@
         if(zbefore_optgroup_event.result === false) {
             return;
         }
-       $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', function( i, val ) { return !val; }).change();
+        
+        var checked = false;
+        $.each( $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']"), function(){
+            if($(this).prop('checked') == false){
+                checked = true;
+                return false;    
+            }
+           
+            
+        });
+        $(this).parent().find(".optgroup_"+$(this).attr('data-optgroup')+" li input:checkbox[disabled!='disabled']").prop('checked', checked).change();
     });
 
 
