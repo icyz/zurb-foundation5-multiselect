@@ -12,20 +12,20 @@
 (function($) {
     
        
-	//toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
-        $(document).on('click', function(e){    
-            var id=false;
-            if(e.target.tagName == 'SPAN'){ id = $(e.target).parent().attr('id'); }
-            if(e.target.tagName == 'DIV'){  id = $(e.target).attr('id'); }
+    //toggle for click on zselect, close for click elsewhere, nothing for click on .zselect *
+    $(document).on('click', function(e){    
+        var id=false;
+        if(e.target.tagName == 'SPAN'){ id = $(e.target).parent().attr('id'); }
+        if(e.target.tagName == 'DIV'){  id = $(e.target).attr('id'); }
 
-            var container = $(".zselect ul");
-        
-            if ( container.parent().is(e.target) || container.prev().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
-                if(!id) container.hide(); //when user click out 
-                else    $(".zselect#"+id+" ul").toggle();
-            }
-            
-        });
+        var container = $(".zselect ul");
+
+        if ( container.parent().is(e.target) || container.prev().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
+            if(!id) container.hide(); //when user click out 
+            else    $(".zselect#"+id+" ul").toggle();
+        }
+
+    });
 
     
 
@@ -250,7 +250,7 @@ var methods = {
         }//end live
         
         
-        if(options.get !== undefined){  console.log(options.get);
+        if(options.get !== undefined){  //console.log(options.get);
             var query = window.location.search.substring(1);
             var vars = query.split("&");
             var need = false;
@@ -265,9 +265,14 @@ var methods = {
             
             if(need){
                 var rel = this.attr('rel');
+                var _live = "";
                 for(var i=0; i<need.length; i++){
                     $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").prop('checked',true);
-                   
+                    _live += need[i]+",";
+                }
+                //refresh live value
+                if(options.live !== undefined){
+                    $(options.live).val(_live.substring(0, _live.length - 1));
                 }
                 refreshPlaceholder(rel,options.placeholder,options.selectedText);
             }
