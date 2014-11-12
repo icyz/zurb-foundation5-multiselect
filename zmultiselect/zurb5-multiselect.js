@@ -283,7 +283,7 @@ var methods = {
         }
 
         // Updates original select after checkbox update
-        $(".zselect").on('change', 'input:checkbox', function() {
+        $(".zselect#"+rel).on('change', 'input:checkbox', function() {
             var container = $(this).closest('.zselect');
             var rel = container.attr('id');
             refreshPlaceholder(rel, options.placeholder, options.selectedText);
