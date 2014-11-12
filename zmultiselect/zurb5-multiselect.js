@@ -22,7 +22,10 @@
 
         if ( container.parent().is(e.target) || container.prev().is(e.target) || ( container.is(':visible') && !container.parent().is(e.target) ) && ( container.has(e.target).length === 0 )  ) {
             if(!id) container.hide(); //when user click out 
-            else    $(".zselect#"+id+" ul").toggle();
+            else {
+                $(".zselect[id!="+id+"] ul").hide(); //hide other multiselect dropdowns
+                $(".zselect#"+id+" ul").toggle();
+            }
         }
 
     });
@@ -134,6 +137,7 @@
 
 var methods = {
     init : function(options) {
+        options = options || {}
         
         var id,checked,dataZ,disabled="",disabledClass="";
         var optgroup=[];
@@ -279,7 +283,7 @@ var methods = {
         }
 
         // Updates original select after checkbox update
-        $(".zselect").on('change', 'input:checkbox', function() {
+        $(".zselect#"+rel).on('change', 'input:checkbox', function() {
             var container = $(this).closest('.zselect');
             var rel = container.attr('id');
             refreshPlaceholder(rel, options.placeholder, options.selectedText);
