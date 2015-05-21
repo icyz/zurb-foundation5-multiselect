@@ -48,7 +48,7 @@
             e.preventDefault();
             if($(this).prop("tagName") == 'LI'){
                 $(this).children().attr("checked", false);
-                $(this).children().trigger('change')
+                $(this).children().trigger('change');
             }                    
             else{
                 $(this).attr("checked", false); // hack to keep placeholder text correct
@@ -58,15 +58,16 @@
         }
         $(this).trigger('change');
         if($(e.target).prop("tagName") !== "INPUT"){
-                $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
-        }            
+            $("input:checkbox[disabled!='disabled']",this).prop('checked', function( i, val ) { return !val; }).trigger('change');
+        }  
     });
     
 
     //select all and deselect all
     $(document).on('click','.selectall,.deselectall', function(){
-       var state = ($(this).hasClass('selectall'))?true:false;
-       $(this).parent().find("input:checkbox[disabled!='disabled']:visible").prop('checked', state).change();
+        var parent = $(this).parent().find("input:checkbox[disabled!='disabled']:visible");
+        parent.prop('checked', ( $(this).hasClass('selectall'))?true:false ); 
+        parent.eq('0').change();
     });
 
     //optgroup
@@ -148,8 +149,8 @@ var methods = {
             $(v).parent().append("<div id='"+id+"' class='zselect'><span class='zmshead'></span><ul></ul></div>");
             
             if(options.selectAll!==false){
-                var sAllText="Select All";
-                var desAllText="Deselect All";
+                var sAllText="Seleziona tutto";
+                var desAllText="Deseleziona tutto";
                 if(options.selectAllText!==undefined){
                     sAllText=options.selectAllText[0];
                     desAllText=options.selectAllText[1];
@@ -253,21 +254,19 @@ var methods = {
         if(options.get !== undefined){  //console.log(options.get);
             var query = window.location.search.substring(1);
             var vars = query.split("&");
-            var need = false;
+            var need = false; 
             for (var i=0;i<vars.length;i++) {
                 var pair = vars[i].split("=");
                 if (pair[0] == options.get) {
-                
                     need = pair[1].replace(new RegExp(',', 'g'), '%2C').split('%2C');
                   
                 }
             } 
-            
             if(need){
                 var rel = this.attr('rel');
                 var _live = "";
                 for(var i=0; i<need.length; i++){
-                    $(".zselect#"+rel+" ul li input:checkbox[value='"+need[i]+"']").prop('checked',true);
+                    $(".zselect#"+rel+" ul li input:checkbox[value='"+decodeURI(need[i])+"']").prop('checked',true);
                     _live += need[i]+",";
                 }
                 //refresh live value
@@ -278,13 +277,15 @@ var methods = {
             }
         }
 
+        
         // Updates original select after checkbox update
-        $(".zselect").on('change', 'input:checkbox', function() {
+        $(".zselect#"+rel).on('change', 'input:checkbox', function() {
+            //console.time('A1');
             var container = $(this).closest('.zselect');
             var rel = container.attr('id');
             refreshPlaceholder(rel, options.placeholder, options.selectedText);
-
             var select = $('select[rel='+rel+']');
+            
             $.each(container.find('input:checkbox'), function(k, v) {
                 if($(v).val() !== undefined){
                     if($(v).prop('checked')) {
@@ -294,8 +295,11 @@ var methods = {
                     }
                 }
             });
-            select.trigger('change');
+            
+            //select.trigger('change');
+            //console.timeEnd('A1');
         });
+        
 
         onResize();
 
@@ -340,17 +344,20 @@ var methods = {
     set : function (val,checked){
         $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").prop('checked', checked).change();
     },
-    uncheckall_inpage : function( ) {
-        $(".zselect ul li input:checkbox").prop('checked', false).change();
+    uncheckall_inpage : function(val) {
+        $(".zselect ul li input:checkbox").prop('checked', false);
+        $(".zselect .zmshead").text(val);
     },
-    checkall_inpage : function( ) {
+    checkall_inpage : function( ) { //deprecata
         $(".zselect ul li input:checkbox").prop('checked', true).change();
     },
     checkall : function( ) {
-        $("div#"+$(this).attr('rel')+" ul li input:checkbox").prop('checked', true).change();
+        $("div#"+$(this).attr('rel')+" ul li input:checkbox").prop('checked', true);
+        $("div#"+$(this).attr('rel')+" ul li input:checkbox:last").change();
     },
     uncheckall : function( ) {
-        $("div#"+$(this).attr('rel')+" ul li input:checkbox").prop('checked', false).change();
+        $("div#"+$(this).attr('rel')+" ul li input:checkbox").prop('checked', false);
+        $("div#"+$(this).attr('rel')+" ul li input:checkbox:last").change();
     },
     destroy : function (val){
         $("div#"+$(this).attr('rel')+" ul li input:checkbox[value='"+val+"']").parent().remove();
