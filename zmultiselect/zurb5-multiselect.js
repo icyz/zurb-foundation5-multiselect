@@ -202,6 +202,7 @@ var methods = {
                 
             });
             $('#'+id+' span.zmshead').html( (options.placeholder===undefined) ? '&nbsp;' : options.placeholder );
+            refreshPlaceholder(id,options.placeholder,options.selectedText);
         });
         
         if(options.filter === true){
